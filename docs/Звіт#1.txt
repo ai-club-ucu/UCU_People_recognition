@@ -1,0 +1,10 @@
+#1 тиждень роботи
+Пророблена робота:
+За цей тиждень я опрацював, перші 100 сторінок книжки O`REILLY Learning OpenCV
+Під час роботи по відкритих туторіалах openCV: 
+http://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_tutorials.html
+  Навчився працюват  з бібліотекою numpy, matplotlib, також вивчив базові операції з відео і картинками в бібліотеці cv2
+  (головна бібліотека openCV)
+Ми також визначилися з назвою проекту - Visitors Tracker
+Питання:
+---

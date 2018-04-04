@@ -1,0 +1,3 @@
+За тиждень роботи зроблено:
+  Опрацьовано optical flow, каскад Хаара, гловні функції і методи бібліотеки numpy.
+  Morphological Transformation openCV, BackgroundReduction, Homography.

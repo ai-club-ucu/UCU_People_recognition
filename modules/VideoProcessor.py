@@ -1,15 +1,16 @@
 import cv2
 import numpy as np
-from mtcnn.mtcnn import MTCNN
-from utils import parse_datetime
-from config import *
+from modules.utils import parse_datetime
+from modules.config import *
 
 
 class VideoProcessor:
+    """Represents video and image processing."""
+
     def __init__(self, video_path="assets/sample_3.avi"):
         """
-        Subtracting background from the video frames and find contours on the original frame
-        which could be a person in the queue.
+        Subtracting background from the video frames and find contours on the
+        original frame which could be a person in the queue.
         :string video_path: path to the video to process
         """
         self.stream = cv2.VideoCapture(video_path)
@@ -22,8 +23,9 @@ class VideoProcessor:
 
     @staticmethod
     def crop_interesting_region(frame):
+        """Crop specific frame region."""
         return frame[interesting_region_y_1:interesting_region_y_2,
-                     interesting_region_x_1:interesting_region_x_2]
+               interesting_region_x_1:interesting_region_x_2]
 
     @staticmethod
     def leave_only_persons(frame, boxes):
@@ -86,6 +88,13 @@ class VideoProcessor:
             cv2.waitKey()
 
     def make_heatmap(self, frame, reset=None):
+        """
+        Make heatmap from prepared frame.
+
+        :param frame: frame
+        :param reset: reset heatmap or not
+        :return: None
+        """
         if self.prev is None:
             gray = self.prepare_frame(frame)
             self.prev = gray
@@ -94,8 +103,8 @@ class VideoProcessor:
         else:
             gray = self.prepare_frame(frame)
             if reset is not None:
-                self.res = (
-                    0.05 * gray).astype(np.float64) + self.prev_show * 3.0
+                self.res = (0.05 * gray).astype(
+                    np.float64) + self.prev_show * 3.0
             processed = self.compare_with_prev(gray)
             processed = processed.astype(np.float64)
             self.res += (40 * processed + gray) * 0.01
@@ -107,6 +116,12 @@ class VideoProcessor:
             cv2.imshow("res", show_res)
 
     def prepare_frame(self, frame):
+        """
+        Process frame to prepare for heatmap.
+
+        :param frame: frame to prepare
+        :return: None
+        """
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         gray = cv2.GaussianBlur(gray, (11, 11), 2, 2)
         gray = self.adjust_gamma(gray, 1.5)
@@ -114,6 +129,12 @@ class VideoProcessor:
         return clahe.apply(gray)
 
     def compare_with_prev(self, frame):
+        """
+        Compare current frame with previous.
+
+        :param frame: frame to compare with previous
+        :return: frame with threshold
+        """
         delta = cv2.absdiff(self.prev, frame)
         self.prev = frame
         kernel = cv2.getStructuringElement(
@@ -124,13 +145,16 @@ class VideoProcessor:
         return closing
 
     def get_next_frame(self):
+        """Gets next frame."""
         grabbed, frame = self.stream.read()
         return grabbed, frame
 
     def initialize(self, frame):
+        """Copies the current frame"""
         self.init_frame = frame.copy()
 
     def show_video(self):
+        """Plays the video."""
         grabbed, frame = self.get_next_frame()
         n = 0
         while grabbed:
@@ -146,6 +170,7 @@ class VideoProcessor:
                 break
 
     def adjust_gamma(self, img, gamma=1.5):
+        """Brightens the frame."""
         invGamma = 1.0 / gamma
         table = np.array([((i / 255.0) ** invGamma) * 255
                           for i in np.arange(0, 256)]).astype("uint8")

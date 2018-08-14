@@ -4,7 +4,7 @@
 This project is created for visualizing and tracking people motion in UCU cafe Trapezna.
 Based on amount of people and motion speed the program builds live video heatmap which
 is simple for understanding. The project mostly is intended for UCU students who
-want to avoid long queue in Trapezna when they want to eat. Heatmap will help to
+want to avoid long queue when in Trapezna when they want to it. Heatmap will help to
 find out how many people is currently in Trapezna.
 
 ## Installation
@@ -49,6 +49,7 @@ Live video heatmap.
     * initialize (copies current frame)
     * get_next_frame (gets next frame)
     * show_video (visualizes the heatmap and resets traces every 220 frames)
+6. requirements.txt (python packages required for project usage)
 
 ## Contributing
 - Fork it (https://github.com/andrwkoval/trapezna/fork)

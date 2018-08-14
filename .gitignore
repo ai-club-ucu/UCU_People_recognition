@@ -8,11 +8,8 @@ setup.py
 data
 data/
 __pycache__/
-<<<<<<< HEAD
 heatmap_example.py
 test.py
 server.py
-=======
-assets/
->>>>>>> b4b674412d498a5310bf57ede0893abb68190176
+/.idea
 

@@ -15,8 +15,8 @@ def upload_file():
     if request.method == 'POST':
         f = request.files['file']
         f.save(secure_filename(f.filename))
-        processor = VideoProcessor('templates/{}'.format(f.filename))
-        return 'file uploaded successfully'
+        processor = VideoProcessor('app/{}'.format(f.filename))
+        return stats()
 
 @app.route('/uploader/statistic')
 def stats():

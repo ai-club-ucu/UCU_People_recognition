@@ -27,11 +27,11 @@ class VideoProcessor:
         self.prev = None
         self.graph_data = []
         self.fps = self.stream.get(cv2.CAP_PROP_POS_MSEC)
-        self.time = 0
+        self.time = []
 
     def time_change(self, current_frame):
         """returning current video time"""
-        return current_frame / self.fps
+        self.time.append(current_frame / self.fps)
 
     @staticmethod
     def crop_interesting_region(frame):

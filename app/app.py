@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
 from werkzeug.utils import secure_filename
+from modules.VideoProcessor import VideoProcessor
 
 app = Flask(__name__)
 
@@ -14,7 +15,13 @@ def upload_file():
     if request.method == 'POST':
         f = request.files['file']
         f.save(secure_filename(f.filename))
+        processor = VideoProcessor('templates/{}'.format(f.filename))
         return 'file uploaded successfully'
+
+@app.route('/uploader/statistic')
+def stats():
+    return "statistic"
+
 
 
 if __name__ == '__main__':

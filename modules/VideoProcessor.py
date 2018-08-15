@@ -1,7 +1,12 @@
-import cv2
+import cv2, collections
 import numpy as np
 from modules.utils import parse_datetime
 from modules.config import *
+from itertools import islice
+
+def take(n, iterable):
+    "Return first n items of the iterable as a list"
+    return list(islice(iterable, n))
 
 
 class VideoProcessor:
@@ -20,6 +25,7 @@ class VideoProcessor:
         self.min_area = min_contour_area_to_be_a_person
         self.max_area = max_contour_area_to_be_a_person
         self.prev = None
+        self.graph_data = []
 
     @staticmethod
     def crop_interesting_region(frame):
@@ -110,6 +116,10 @@ class VideoProcessor:
             self.res += (40 * processed + gray) * 0.01
             show_res = (self.res) / self.res.max()
             show_res = np.floor(show_res * 255)
+            unique, counts = np.unique(np.floor(self.res), return_counts=True)
+            new_dict = dict(zip(unique, counts))
+            first_entries = take(10, new_dict)
+            self.graph_data.append(sum(first_entries)) #appending amount of the most hot spots
             self.prev_show = show_res
             show_res = show_res.astype(np.uint8)
             show_res = cv2.applyColorMap(show_res, cv2.COLORMAP_JET)

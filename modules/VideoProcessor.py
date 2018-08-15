@@ -26,12 +26,11 @@ class VideoProcessor:
         self.max_area = max_contour_area_to_be_a_person
         self.prev = None
         self.graph_data = []
-        self.fps = self.stream.get(cv2.CAP_PROP_POS_MSEC)
         self.time = []
 
-    def time_change(self, current_frame):
+    def time_change(self, current_frame, fps):
         """returning current video time"""
-        self.time.append(current_frame / self.fps)
+        self.time.append(current_frame / fps)
 
     @staticmethod
     def crop_interesting_region(frame):
@@ -174,7 +173,7 @@ class VideoProcessor:
         grabbed, frame = self.get_next_frame()
         n = 0
         while grabbed:
-            self.time_change(n)
+            self.time_change(n, self.stream.get(cv2.CAP_PROP_POS_MSEC))
             if n % 220 == 0:
                 self.make_heatmap(frame, n)
             else:

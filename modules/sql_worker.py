@@ -19,4 +19,3 @@ def drop_table(table_name, connection):
     sql_statement = "DROP TABLE IF EXISTS {}".format(table_name)
     cursor.execute(sql_statement)
 
-

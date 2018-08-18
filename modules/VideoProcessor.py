@@ -128,7 +128,7 @@ class VideoProcessor:
             self.prev_show = show_res
             show_res = show_res.astype(np.uint8)
             show_res = cv2.applyColorMap(show_res, cv2.COLORMAP_JET)
-            cv2.imshow("res", show_res)
+            # cv2.imshow("res", show_res)
 
     def prepare_frame(self, frame):
         """
